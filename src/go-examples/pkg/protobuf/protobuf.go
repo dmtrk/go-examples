@@ -2,21 +2,15 @@ package protobuf
 
 import "github.com/golang/protobuf/proto"
 
-type ProtoMessage interface {
+type ProtoMessage2 interface {
 	GetHeaders() []*Header
 }
 
 
-func AddHeader(message *ProtoMessage, name string, value string){
+func AddHeader(message *ProtoMessage2, name string, value string){
 	h := &Header{name,value}
-	message.Headers = append(message.Headers, h)
+	message.GetHeaders() = append(message.GetHeaders(), h)
 }
-
-func AddHeader(message *BytesMessage, name string, value string){
-	h := &Header{name,value}
-	message.Headers = append(message.Headers, h)
-}
-
 
 func SerializeBytesMessage(message *BytesMessage) ([]byte, error) {
 	return proto.Marshal(message)
