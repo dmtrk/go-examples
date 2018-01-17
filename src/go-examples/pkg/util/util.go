@@ -10,7 +10,7 @@ import (
 func ParsePropertiesFromFile(filename string) (map[string]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
-		return nil, err
+		return make(map[string]string), err
 	}
 	defer file.Close()
 	return ParseProperties(file), nil
@@ -29,4 +29,12 @@ func ParseProperties(reader io.Reader) (map[string]string) {
 		}
 	}
 	return properties;
+}
+
+func GetString(properties map[string]string, key string, defaultValue string) string {
+	value := properties[key]
+	if len(value) > 0 {
+		return strings.TrimSpace(value)
+	}
+	return defaultValue
 }
