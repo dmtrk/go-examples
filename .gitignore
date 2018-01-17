@@ -2,3 +2,4 @@
 *.iml
 /pkg/
 /*/*/vendor/
+*.go1
