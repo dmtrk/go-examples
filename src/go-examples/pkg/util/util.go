@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"strings"
 	"io"
+	"strconv"
 )
 
 func ParsePropertiesFromFile(filename string) (map[string]string, error) {
@@ -31,10 +32,21 @@ func ParseProperties(reader io.Reader) (map[string]string) {
 	return properties;
 }
 
-func GetString(properties map[string]string, key string, defaultValue string) string {
+func GetStr(properties map[string]string, key string, defaultValue string) string {
 	value := properties[key]
 	if len(value) > 0 {
 		return strings.TrimSpace(value)
+	}
+	return defaultValue
+}
+
+func GetInt(properties map[string]string, key string, defaultValue int) int {
+	value := properties[key]
+	if len(value) > 0 {
+		i, err := strconv.Atoi(strings.TrimSpace(value))
+		if (err == nil) {
+			return i;
+		}
 	}
 	return defaultValue
 }
