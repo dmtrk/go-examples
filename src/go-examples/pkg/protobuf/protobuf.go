@@ -1,55 +1,64 @@
 package protobuf
 
-import "github.com/golang/protobuf/proto"
+import (
+	"github.com/golang/protobuf/proto"
+)
 
-type ProtoMessage2 interface {
-	GetHeaders() []*Header
+//####### BytesMessage
+func NewBytesMessage(headers map[string]string, data string) *BytesMessage {
+	message := &BytesMessage{}
+	message.Data = []byte(data)
+	for key, value := range headers {
+		header := new(Header)
+		header.Name = key
+		header.Value = value
+		message.Headers = append(message.Headers, header)
+	}
+	return message;
 }
 
-
-func AddHeader(message *ProtoMessage2, name string, value string){
-	h := &Header{name,value}
-	message.GetHeaders() = append(message.GetHeaders(), h)
+func AddHeaderBytesMessage(message *BytesMessage, name string, value string) {
+	h := &Header{name, value}
+	message.Headers = append(message.GetHeaders(), h)
 }
 
 func SerializeBytesMessage(message *BytesMessage) ([]byte, error) {
 	return proto.Marshal(message)
 }
 
-
 func DeserializeBytesMessage(data []byte) (*BytesMessage, error) {
-	msg := &BytesMessage{}
-	err := proto.Unmarshal(data, msg)
-	if err == nil {
-		message := &BytesMessage{}
-		message.Data = string(msg.Data);
-		message.Headers = make(map[string]string, len(msg.Headers))
-		for _, element := range msg.Headers {
-			message.Headers[element.Name]=element.Value
-		}
-		return message,nil;
-	}
-	return nil,err;
+	message := &BytesMessage{}
+	return message, proto.Unmarshal(data, message)
 }
 
+//####### FieldsMessage
+func NewFieldsMessage(headers map[string]string, fields map[string]string) *FieldsMessage {
+	message := &FieldsMessage{}
+	for key, value := range headers {
+		header := new(Header)
+		header.Name = key
+		header.Value = value
+		message.Headers = append(message.Headers, header)
+	}
+	for key, value := range fields {
+		field := new(Field)
+		field.Name = key
+		field.Value = value
+		message.Fields = append(message.Fields, field)
+	}
+	return message;
+}
+
+func AddHeaderFieldsMessage(message *FieldsMessage, name string, value string) {
+	h := &Header{name, value}
+	message.Headers = append(message.GetHeaders(), h)
+}
 
 func SerializeFieldsMessage(message *FieldsMessage) ([]byte, error) {
 	return proto.Marshal(message)
 }
 
 func DeserializeFieldsMessage(data []byte) (*FieldsMessage, error) {
-	protoMessage := &FieldsMessage{}
-	err := proto.Unmarshal(data, protoMessage)
-	if err == nil {
-		message := &FieldsMessage{}
-		message.Headers = make(map[string]string, len(protoMessage.Headers))
-		for _, element := range protoMessage.Headers {
-			message.Headers[element.Name]=element.Value
-		}
-		for _, element := range protoMessage.Fields {
-			message.Fields[element.Name]=element.Value
-		}
-		return message,nil;
-	}
-	return nil,err;
+	message := &FieldsMessage{}
+	return message, proto.Unmarshal(data, message)
 }
