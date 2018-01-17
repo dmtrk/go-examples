@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	DEFAULT_URL = "amqp://localhost"
 	DEFAULT_USERNAME = "guest"
 	DEFAULT_PASSWORD = "guest"
 )
@@ -26,11 +27,11 @@ type RabbitPublisher struct {
 func NewRabbitPublisher(properties map[string]string) *RabbitPublisher {
 	instance := new(RabbitPublisher)
 	//
-	instance.Url = util.GetString(properties, "amqp.url", "amqp://localhost")
-	instance.Exchange = util.GetString(properties, "amqp.exchange", "")
-	instance.RoutingKey = util.GetString(properties, "amqp.routing_key", "")
-	instance.Username = util.GetString(properties, "amqp.username", DEFAULT_USERNAME)
-	instance.Password = util.GetString(properties, "amqp.password", DEFAULT_PASSWORD)
+	instance.Url = util.GetStr(properties, "amqp.url", DEFAULT_URL)
+	instance.Exchange = util.GetStr(properties, "amqp.exchange", "")
+	instance.RoutingKey = util.GetStr(properties, "amqp.routing_key", "")
+	instance.Username = util.GetStr(properties, "amqp.username", DEFAULT_USERNAME)
+	instance.Password = util.GetStr(properties, "amqp.password", DEFAULT_PASSWORD)
 	//
 	return instance
 }
