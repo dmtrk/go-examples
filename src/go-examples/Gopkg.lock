@@ -2,10 +2,64 @@
 
 
 [[projects]]
+  name = "github.com/Shopify/sarama"
+  packages = ["."]
+  revision = "3b1b38866a79f06deddf0487d5c27ba0697ccd65"
+  version = "v1.15.0"
+
+[[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
+  name = "github.com/eapache/go-resiliency"
+  packages = ["breaker"]
+  revision = "6800482f2c813e689c88b7ed3282262385011890"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/eapache/go-xerial-snappy"
+  packages = ["."]
+  revision = "bb955e01b9346ac19dc29eb16586c90ded99a98c"
+
+[[projects]]
+  name = "github.com/eapache/queue"
+  packages = ["."]
+  revision = "44cc805cf13205b55f69e14bcb69867d1ae92f98"
+  version = "v1.1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "1e59b77b52bf8e4b449a57e6f79f21226d571845"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  revision = "553a641470496b2327abcac10b36396bd98e45c9"
+
+[[projects]]
+  name = "github.com/pierrec/lz4"
+  packages = ["."]
+  revision = "2fcda4cb7018ce05a25959d2fe08c83e3329f169"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/pierrec/xxHash"
+  packages = ["xxHash32"]
+  revision = "f051bb7f1d1aaf1b5a665d74fb6b0217712c69f7"
+  version = "v0.1.1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/rcrowley/go-metrics"
+  packages = ["."]
+  revision = "e181e095bae94582363434144c61a9653aff6e50"
 
 [[projects]]
   branch = "master"
@@ -16,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7543faddcb103e4dbce31c4d87214f0d9a834f1611514913c2de5fd59f5692d8"
+  inputs-digest = "1d423e5108b7b38909987541b096b04d2644126532a340a1cdfd81fb3344f53e"
   solver-name = "gps-cdcl"
   solver-version = 1
