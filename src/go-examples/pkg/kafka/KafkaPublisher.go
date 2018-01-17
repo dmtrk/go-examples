@@ -45,6 +45,7 @@ func (self *KafkaPublisher) Connect() error {
 		return err
 	}
 	self.producer = p
+	fmt.Println("Connected() producer: ",self.producer)
 	//
 	return nil
 }
@@ -66,17 +67,6 @@ func (self *KafkaPublisher) Publish(headers map[string]string, data []byte) (err
 		}
 		partition, offset, err := self.producer.SendMessage(msg)
 		fmt.Printf("Message is stored in topic(%s)/partition(%d)/offset(%d)\n", self.Topic, partition, offset)
-
-
-		/*		err := self.channel.Publish(
-					self.Exchange, // exchange
-					self.RoutingKey, // routing key
-					false, // mandatory
-					false, // immediate
-					amqp.Publishing{
-						ContentType: "application/octet-stream",
-						Body:        data,
-					})*/
 		return err
 	}
 }
