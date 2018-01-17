@@ -9,7 +9,7 @@ import (
 func main() {
 	fmt.Println("main()")
 	fileName := ""
-	properties, _ := util.ParseProperties(fileName)
+	properties, _ := util.ParsePropertiesFromFile(fileName)
 	publisher := http.NewHttpPublisher(properties)
 	fmt.Sprintf("publisher: %v", publisher)
 
