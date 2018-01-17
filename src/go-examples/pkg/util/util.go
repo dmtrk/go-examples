@@ -50,3 +50,12 @@ func GetInt(properties map[string]string, key string, defaultValue int) int {
 	}
 	return defaultValue
 }
+
+func GetBool(properties map[string]string, key string, defaultValue bool) bool {
+	value := properties[key]
+	if len(value) > 0 {
+		normValue := strings.ToUpper(strings.TrimSpace(value))
+		return normValue=="TRUE" || normValue=="1" || normValue=="Y"
+	}
+	return defaultValue
+}
