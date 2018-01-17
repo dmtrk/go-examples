@@ -8,12 +8,13 @@ import (
 )
 
 func main() {
-	testText()
-	testProto()
+	fmt.Println("main()")
+	rabbitTestText()
+	rabbitTestProto()
 }
 
-func testText() {
-	fmt.Println("testText()")
+func rabbitTestText() {
+	fmt.Println("rabbitTestText()")
 	fileName := ""
 	properties, _ := util.ParsePropertiesFromFile(fileName)
 	properties["amqp.url"] = "amqp://172.16.0.125"
@@ -40,8 +41,8 @@ func testText() {
 	}
 }
 
-func testProto() {
-	fmt.Println("testProto()")
+func rabbitTestProto() {
+	fmt.Println("rabbitTestProto()")
 	fileName := ""
 	properties, _ := util.ParsePropertiesFromFile(fileName)
 	properties["amqp.url"] = "amqp://172.16.0.125"
