@@ -44,6 +44,12 @@
   revision = "553a641470496b2327abcac10b36396bd98e45c9"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/mxk/go-imap"
+  packages = ["imap"]
+  revision = "531c36c3f12d6a03ea766b07a77314aa51ec17f3"
+
+[[projects]]
   name = "github.com/pierrec/lz4"
   packages = ["."]
   revision = "2fcda4cb7018ce05a25959d2fe08c83e3329f169"
@@ -70,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1d423e5108b7b38909987541b096b04d2644126532a340a1cdfd81fb3344f53e"
+  inputs-digest = "fdd72cf764688757b5c652658b33773d42422360befc907b5238ca2b8f1f4762"
   solver-name = "gps-cdcl"
   solver-version = 1
