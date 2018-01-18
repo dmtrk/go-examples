@@ -7,12 +7,6 @@ import (
 	"errors"
 )
 
-const (
-	DEFAULT_URL = "amqp://localhost"
-	DEFAULT_USERNAME = "guest"
-	DEFAULT_PASSWORD = "guest"
-)
-
 type RabbitProducer struct {
 	connection *amqp.Connection
 	channel    *amqp.Channel
@@ -27,11 +21,11 @@ type RabbitProducer struct {
 func NewRabbitProducer(properties map[string]string) *RabbitProducer {
 	instance := new(RabbitProducer)
 	//
-	instance.Url = util.GetStr(properties, "amqp.url", DEFAULT_URL)
+	instance.Url = util.GetStr(properties, "amqp.url", RABBIT_DEFAULT_URL)
 	instance.Exchange = util.GetStr(properties, "amqp.exchange", "")
 	instance.RoutingKey = util.GetStr(properties, "amqp.routing_key", "")
-	instance.Username = util.GetStr(properties, "amqp.username", DEFAULT_USERNAME)
-	instance.Password = util.GetStr(properties, "amqp.password", DEFAULT_PASSWORD)
+	instance.Username = util.GetStr(properties, "amqp.username", RABBIT_DEFAULT_USERNAME)
+	instance.Password = util.GetStr(properties, "amqp.password", RABBIT_DEFAULT_PASSWORD)
 	//
 	return instance
 }
@@ -41,7 +35,7 @@ func (self *RabbitProducer) IsConnected() bool {
 }
 
 func (self *RabbitProducer) Connect() error {
-	shutdown(self.connection, self.channel)
+	shutdownProducer(self.connection, self.channel)
 	conn, err := amqp.Dial(self.Url)
 	if err != nil {
 		return err
@@ -58,7 +52,7 @@ func (self *RabbitProducer) Connect() error {
 
 func (self *RabbitProducer) Disconnect() {
 	fmt.Println("Disconnect()")
-	shutdown(self.connection, self.channel)
+	shutdownProducer(self.connection, self.channel)
 	self.connection = nil;
 	self.channel = nil;
 }
@@ -81,7 +75,7 @@ func (self *RabbitProducer) Publish(headers map[string]string, data []byte) (err
 	}
 }
 
-func shutdown(connection *amqp.Connection, channel *amqp.Channel) {
+func shutdownProducer(connection *amqp.Connection, channel *amqp.Channel) {
 	if channel != nil {
 		channel.Close()
 	}
