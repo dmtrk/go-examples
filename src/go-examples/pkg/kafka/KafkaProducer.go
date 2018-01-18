@@ -8,11 +8,6 @@ import (
 	"strings"
 )
 
-const (
-	DEFAULT_BROKERS = "localhost:9092"
-	DEFAULT_RETRY_MAX = 5
-)
-
 type KafkaProducer struct {
 	config   *sarama.Config
 	producer sarama.SyncProducer
@@ -26,9 +21,9 @@ func NewKafkaProducer(properties map[string]string) *KafkaProducer {
 	instance.config = sarama.NewConfig()
 	instance.config.Producer.Return.Successes = true //must be true to be used in a SyncProducer
 	instance.config.Producer.RequiredAcks = sarama.WaitForAll
-	instance.config.Producer.Retry.Max = util.GetInt(properties, "kafka.retry_max", DEFAULT_RETRY_MAX)
+	instance.config.Producer.Retry.Max = util.GetInt(properties, "kafka.retry_max", KAFKA_DEFAULT_RETRY_MAX)
 	//
-	instance.Brokers = strings.Split(util.GetStr(properties, "kafka.brokers", DEFAULT_BROKERS), ",")
+	instance.Brokers = strings.Split(util.GetStr(properties, "kafka.brokers", KAFKA_DEFAULT_BROKERS), ",")
 	instance.Topic = util.GetStr(properties, "kafka.topic", "")
 	//
 	return instance
@@ -39,20 +34,20 @@ func (self *KafkaProducer) IsConnected() bool {
 }
 
 func (self *KafkaProducer) Connect() error {
-	shutdown(self.producer)
+	shutdownProducer(self.producer)
 	p, err := sarama.NewSyncProducer(self.Brokers, self.config)
 	if err != nil {
 		return err
 	}
 	self.producer = p
-	fmt.Println("Connected() producer: ",self.producer)
+	fmt.Println("Connected() producer: ", self.producer)
 	//
 	return nil
 }
 
 func (self *KafkaProducer) Disconnect() {
 	fmt.Println("Disconnect()")
-	shutdown(self.producer)
+	shutdownProducer(self.producer)
 	self.producer = nil;
 }
 
@@ -71,7 +66,7 @@ func (self *KafkaProducer) Publish(headers map[string]string, data []byte) (erro
 	}
 }
 
-func shutdown(producer sarama.SyncProducer) {
+func shutdownProducer(producer sarama.SyncProducer) {
 	if producer != nil {
 		producer.Close()
 	}
