@@ -20,7 +20,7 @@ func kafkaTestText() {
 	properties["kafka.brokers"] = "172.16.0.125:9092"
 	properties["kafka.topic"] = "test"
 	//
-	publisher := kafka.NewKafkaPublisher(properties)
+	publisher := kafka.NewKafkaProducer(properties)
 	defer publisher.Disconnect()
 	fmt.Println("publisher: ", publisher)
 	//
@@ -48,7 +48,7 @@ func kafkaTestProto() {
 	properties["kafka.brokers"] = "172.16.0.125:9092"
 	properties["kafka.topic"] = "test"
 	//
-	publisher := kafka.NewKafkaPublisher(properties)
+	publisher := kafka.NewKafkaProducer(properties)
 	defer publisher.Disconnect()
 	fmt.Println("publisher: ", publisher)
 	//

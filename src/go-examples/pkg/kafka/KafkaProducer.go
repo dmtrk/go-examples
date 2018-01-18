@@ -13,7 +13,7 @@ const (
 	DEFAULT_RETRY_MAX = 5
 )
 
-type KafkaPublisher struct {
+type KafkaProducer struct {
 	config   *sarama.Config
 	producer sarama.SyncProducer
 	//
@@ -21,8 +21,8 @@ type KafkaPublisher struct {
 	Topic    string
 }
 
-func NewKafkaPublisher(properties map[string]string) *KafkaPublisher {
-	instance := new(KafkaPublisher)
+func NewKafkaProducer(properties map[string]string) *KafkaProducer {
+	instance := new(KafkaProducer)
 	instance.config = sarama.NewConfig()
 	instance.config.Producer.Return.Successes = true //must be true to be used in a SyncProducer
 	instance.config.Producer.RequiredAcks = sarama.WaitForAll
@@ -34,11 +34,11 @@ func NewKafkaPublisher(properties map[string]string) *KafkaPublisher {
 	return instance
 }
 
-func (self *KafkaPublisher) IsConnected() bool {
+func (self *KafkaProducer) IsConnected() bool {
 	return self.producer != nil
 }
 
-func (self *KafkaPublisher) Connect() error {
+func (self *KafkaProducer) Connect() error {
 	shutdown(self.producer)
 	p, err := sarama.NewSyncProducer(self.Brokers, self.config)
 	if err != nil {
@@ -50,13 +50,13 @@ func (self *KafkaPublisher) Connect() error {
 	return nil
 }
 
-func (self *KafkaPublisher) Disconnect() {
+func (self *KafkaProducer) Disconnect() {
 	fmt.Println("Disconnect()")
 	shutdown(self.producer)
 	self.producer = nil;
 }
 
-func (self *KafkaPublisher) Publish(headers map[string]string, data []byte) (error) {
+func (self *KafkaProducer) Publish(headers map[string]string, data []byte) (error) {
 	fmt.Println("Publish()")
 	if !self.IsConnected() {
 		return errors.New("Not connected")
