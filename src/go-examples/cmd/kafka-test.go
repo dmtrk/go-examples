@@ -9,12 +9,13 @@ import (
 
 func main() {
 	fmt.Println("main()")
-	kafkaTestText()
-	kafkaTestProto()
+	kafkaProducerTest1()
+	kafkaProducerTest2()
+	kafkaConsumerTest()
 }
 
-func kafkaTestText() {
-	fmt.Println("kafkaTestText()")
+func kafkaProducerTest1() {
+	fmt.Println("kafkaProducerTest1()")
 	fileName := ""
 	properties, _ := util.ParsePropertiesFromFile(fileName)
 	properties["kafka.brokers"] = "172.16.0.125:9092"
@@ -41,8 +42,8 @@ func kafkaTestText() {
 	}
 }
 
-func kafkaTestProto() {
-	fmt.Println("kafkaTestProto()")
+func kafkaProducerTest2() {
+	fmt.Println("kafkaProducerTest2()")
 	fileName := ""
 	properties, _ := util.ParsePropertiesFromFile(fileName)
 	properties["kafka.brokers"] = "172.16.0.125:9092"
@@ -73,4 +74,17 @@ func kafkaTestProto() {
 			}
 		}
 	}
+}
+
+func kafkaConsumerTest() {
+	fmt.Println("kafkaConsumerTest()")
+	fileName := ""
+	properties, _ := util.ParsePropertiesFromFile(fileName)
+	properties["kafka.brokers"] = "172.16.0.125:9092"
+	properties["kafka.topic"] = "test"
+	//
+	consumer := kafka.NewKafkaConsumer(properties)
+	defer consumer.Disconnect()
+	fmt.Println("consumer: ", consumer)
+	//
 }
