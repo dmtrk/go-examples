@@ -20,7 +20,7 @@ func rabbitTestText() {
 	properties["amqp.url"] = "amqp://172.16.0.125"
 	properties["amqp.routing_key"] = "hello"
 	//
-	publisher := rabbit.NewRabbitPublisher(properties)
+	publisher := rabbit.NewRabbitProducer(properties)
 	defer publisher.Disconnect()
 	fmt.Println("publisher: ", publisher)
 	//
@@ -48,7 +48,7 @@ func rabbitTestProto() {
 	properties["amqp.url"] = "amqp://172.16.0.125"
 	properties["amqp.routing_key"] = "hello"
 	//
-	publisher := rabbit.NewRabbitPublisher(properties)
+	publisher := rabbit.NewRabbitProducer(properties)
 	defer publisher.Disconnect()
 	fmt.Println("publisher: ", publisher)
 	//

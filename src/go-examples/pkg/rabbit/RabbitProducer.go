@@ -13,7 +13,7 @@ const (
 	DEFAULT_PASSWORD = "guest"
 )
 
-type RabbitPublisher struct {
+type RabbitProducer struct {
 	connection *amqp.Connection
 	channel    *amqp.Channel
 	//
@@ -24,8 +24,8 @@ type RabbitPublisher struct {
 	Password   string
 }
 
-func NewRabbitPublisher(properties map[string]string) *RabbitPublisher {
-	instance := new(RabbitPublisher)
+func NewRabbitProducer(properties map[string]string) *RabbitProducer {
+	instance := new(RabbitProducer)
 	//
 	instance.Url = util.GetStr(properties, "amqp.url", DEFAULT_URL)
 	instance.Exchange = util.GetStr(properties, "amqp.exchange", "")
@@ -36,11 +36,11 @@ func NewRabbitPublisher(properties map[string]string) *RabbitPublisher {
 	return instance
 }
 
-func (self *RabbitPublisher) IsConnected() bool {
+func (self *RabbitProducer) IsConnected() bool {
 	return self.connection != nil && self.channel != nil
 }
 
-func (self *RabbitPublisher) Connect() error {
+func (self *RabbitProducer) Connect() error {
 	shutdown(self.connection, self.channel)
 	conn, err := amqp.Dial(self.Url)
 	if err != nil {
@@ -56,14 +56,14 @@ func (self *RabbitPublisher) Connect() error {
 	return nil
 }
 
-func (self *RabbitPublisher) Disconnect() {
+func (self *RabbitProducer) Disconnect() {
 	fmt.Println("Disconnect()")
 	shutdown(self.connection, self.channel)
 	self.connection = nil;
 	self.channel = nil;
 }
 
-func (self *RabbitPublisher) Publish(headers map[string]string, data []byte) (error) {
+func (self *RabbitProducer) Publish(headers map[string]string, data []byte) (error) {
 	fmt.Println("Publish()")
 	if !self.IsConnected() {
 		return errors.New("Not connected")
