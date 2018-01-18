@@ -10,7 +10,7 @@ func main() {
 	fmt.Println("main()")
 	fileName := ""
 	properties, _ := util.ParsePropertiesFromFile(fileName)
-	publisher := http.NewHttpPublisher(properties)
+	publisher := http.NewHttpClient(properties)
 	defer publisher.Disconnect()
 	fmt.Sprintf("publisher: %v", publisher)
 
