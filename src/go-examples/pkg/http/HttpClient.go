@@ -8,32 +8,32 @@ import (
 	"bytes"
 )
 
-type HttpPublisher struct {
+type HttpClient struct {
 	client   *http.Client
 	Url      string
 	Username string
 	Password string
 }
 
-func NewHttpPublisher(properties map[string]string) *HttpPublisher {
-	instance := new(HttpPublisher)
+func NewHttpClient(properties map[string]string) *HttpClient {
+	instance := new(HttpClient)
 	instance.client = &http.Client{}
-	instance.Url = util.GetString(properties, "http.url", "https://httpbin.org/post")
-	instance.Username = util.GetString(properties, "http.username", "")
-	instance.Password = util.GetString(properties, "http.password", "")
+	instance.Url = util.GetStr(properties, "http.url", "https://httpbin.org/post")
+	instance.Username = util.GetStr(properties, "http.username", "")
+	instance.Password = util.GetStr(properties, "http.password", "")
 	//
 	return instance
 }
 
-func (self *HttpPublisher) Post(headers map[string]string, data []byte) (error) {
+func (self *HttpClient) Post(headers map[string]string, data []byte) (error) {
 	return self.Do("POST", headers, data)
 }
 
-func (self *HttpPublisher) Get(headers map[string]string, data []byte) (error) {
+func (self *HttpClient) Get(headers map[string]string, data []byte) (error) {
 	return self.Do("GET", headers, data)
 }
 
-func (self *HttpPublisher) Do(method string, headers map[string]string, data []byte) (error) {
+func (self *HttpClient) Do(method string, headers map[string]string, data []byte) (error) {
 	fmt.Println("Publish()")
 	var err error
 	req, err := http.NewRequest(method, self.Url, bytes.NewReader(data))
@@ -66,6 +66,6 @@ func (self *HttpPublisher) Do(method string, headers map[string]string, data []b
 	return err
 }
 
-func (self *HttpPublisher) Disconnect(){
+func (self *HttpClient) Disconnect(){
 	fmt.Println("Disconnect()")
 }
