@@ -2,10 +2,11 @@ syntax = "proto3";
 package protobuf;
 
 //### java options
-//option java_package = "protobuf";
-//option java_outer_classname = "ProtoBuf";
+option java_package = "protobuf";
+option java_outer_classname = "ProtoBuf";
+
 //### GO options
-//option go_package = "protobuf";
+option go_package = "protobuf";
 
 
 message Header {

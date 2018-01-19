@@ -1,0 +1,21 @@
+syntax = "proto3";
+package protobuf;
+
+import "messages.proto";
+
+//### java options
+option java_package = "protobuf";
+option java_outer_classname = "ProtoBuf";
+
+// ### GO ###
+option go_package = "protobuf";
+
+
+message Status {
+    int32 code = 1;
+    string message = 2;
+}
+
+service BackendService {
+    rpc Process(BytesMessage) returns (Status) {}
+}
