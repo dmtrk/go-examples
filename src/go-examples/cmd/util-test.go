@@ -3,12 +3,19 @@ package main
 import (
 	"go-examples/pkg/util"
 	"strings"
-	"fmt"
+	"go-examples/pkg/docker"
+	"os"
+	"log"
 )
 
 func main() {
-	fmt.Println("main()")
+	log.Print("main()")
 	//
 	properties := util.ParseProperties(strings.NewReader("key1=val1 \n # \n key2=val2"))
-	fmt.Println("properties: ", properties)
+	log.Printf("properties: %p", properties)
+
+	//
+	properties2, err := docker.FindAndParseProperties(os.Args)
+	log.Printf("properties2: %v, %v", properties2, err)
+
 }
