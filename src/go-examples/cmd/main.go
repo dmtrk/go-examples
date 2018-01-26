@@ -19,3 +19,4 @@ func main() {
 	log.Printf("properties2: %v, %v", properties2, err)
 
 }
+
